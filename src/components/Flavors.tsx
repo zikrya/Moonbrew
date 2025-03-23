@@ -133,7 +133,7 @@ const Flavors = () => {
                   </>
                 ) : (
                   <button
-                    className={`h-[50px] px-4 bg-[#5D5CB6] text-white font-bold ${isMobile ? "text-sm" : "text-[19px]"} rounded-[8px] flex items-center justify-center`}
+                    className={`w-[134px] h-[50px] bg-[#5D5CB6] rounded-[8px] text-white font-bold text-[19px] leading-[150%] flex items-center justify-center ${isMobile ? "text-sm" : "text-[19px]"} rounded-[8px] flex items-center justify-center`}
                     onClick={(e) => {
                       e.stopPropagation()
                     }}
