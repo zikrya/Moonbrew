@@ -1,16 +1,42 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Subscribe from "./Subscribe"
 
 const Flavors = () => {
-  // State to track which product is selected
+  const [isMobile, setIsMobile] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null)
+  const [productQuantities, setProductQuantities] = useState<{ [key: string]: number }>({
+    "Hot Cocoa": 1,
+    "Sleepy Berry": 1,
+  })
 
-  // Function to handle product selection
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkIfMobile()
+    window.addEventListener("resize", checkIfMobile)
+    return () => window.removeEventListener("resize", checkIfMobile)
+  }, [])
+
+  const incrementQuantity = (productName: string) => {
+    setProductQuantities((prev) => ({
+      ...prev,
+      [productName]: (prev[productName] || 1) + 1,
+    }))
+  }
+
+  const decrementQuantity = (productName: string) => {
+    setProductQuantities((prev) => ({
+      ...prev,
+      [productName]: Math.max(1, (prev[productName] || 1) - 1),
+    }))
+  }
+
   const handleProductSelect = (productName: string) => {
-    // If the same product is clicked again, deselect it
     if (selectedProduct === productName) {
       setSelectedProduct(null)
     } else {
@@ -19,218 +45,122 @@ const Flavors = () => {
   }
 
   return (
-    <div className="relative mx-auto w-[590px] h-[1467px] bg-white rounded-[15px]">
-      {/* Header section */}
-      <div className="pt-6 px-6">
-        <h1 className="text-[19px] font-semibold leading-[150%]">Choose Your Flavors</h1>
-        <p className="text-[15px] font-normal leading-[150%] text-[#606060]">30 servings per pack</p>
+    <div className={`relative bg-white rounded-[15px] ${isMobile ? "w-full px-4 py-4" : "mx-auto w-[590px] h-[1467px]"}`}>
+      {/* Header */}
+      <div className={isMobile ? "pt-2" : "pt-6 px-6"}>
+        <h1 className={`font-semibold leading-[150%] ${isMobile ? "text-base" : "text-[19px]"}`}>Choose Your Flavors</h1>
+        <p className={`text-[#606060] ${isMobile ? "text-sm" : "text-[15px]"} leading-[150%]`}>30 servings per pack</p>
       </div>
 
       {/* Product cards */}
-      <div className="mt-6 px-4 flex flex-col gap-4">
-        {/* Mint Chocolate product card */}
-        <div
-          className={`w-full h-[116px] rounded-[8px] ${
-            selectedProduct === "Mint Chocolate" ? "border-2 border-[#5D5CB6]/80" : "border border-gray-200"
-          } bg-white p-4 flex items-center justify-between relative cursor-pointer transition-colors`}
-          onClick={() => handleProductSelect("Mint Chocolate")}
-        >
-          {/* Product image with background */}
-          <div className="flex-shrink-0 mr-4">
-            <div className="w-[86.04px] h-[91.93px] bg-[#F3F3F3] rounded-[15px] flex items-center justify-center">
-              <Image src="/mint.png" alt="Mint Chocolate" width={80} height={80} className="object-contain" />
-            </div>
-          </div>
+      <div className={`mt-6 flex flex-col gap-4 ${isMobile ? "" : "px-4"}`}>
+        {[
+          {
+            name: "Mint Chocolate",
+            description: "A smooth chocolate infusion with refreshing notes of peppermint and cocoa.",
+            image: "/mint.png",
+            tag: "NEW FLAVOR",
+          },
+          {
+            name: "Hot Cocoa",
+            description: "The perfect blend of chocolatey warmth and bedtime bliss—sip, savor, and sleep.",
+            image: "/hot.png",
+            tag: "BEST SELLER",
+          },
+          {
+            name: "Cinnamon Chai",
+            description: "A delicious chai blend with hints of cinnamon and cardamom.",
+            image: "/chai.png",
+          },
+          {
+            name: "Sleepy Berry",
+            description: "A refreshingly bold berry flavor to quiet your mind and prepare you for dreamland.",
+            image: "/sleepy.png",
+          },
+          {
+            name: "Rose",
+            description: "Soft floral notes of rose that make for a deliciously soothing tea before bed.",
+            image: "/rose.png",
+          },
+        ].map((product) => {
+          const isSelected = selectedProduct === product.name
+          const showCounter = ["Hot Cocoa", "Sleepy Berry"].includes(product.name)
 
-          {/* Product info */}
-          <div className="flex-grow">
-            <h3 className="text-[19px] font-semibold leading-[150%] text-[#606060]">Mint Chocolate</h3>
-            <p className="text-[13px] font-normal italic leading-[150%] text-[#606060]">
-              A smooth chocolate infusion with refreshing notes of peppermint and cocoa.
-            </p>
-          </div>
-
-          {/* Add button */}
-          <div className="flex-shrink-0 ml-4">
-            <button
-              className="w-[134px] h-[50px] bg-[#5D5CB6] text-white font-bold text-[19px] rounded-[8px] flex items-center justify-center"
-              onClick={(e) => {
-                e.stopPropagation() // Prevent triggering the card's onClick
-                // Add product logic here
-              }}
+          return (
+            <div
+              key={product.name}
+              className={`w-full rounded-[8px] ${isSelected ? "border-2 border-[#5D5CB6]/80" : "border border-gray-200"} bg-white p-4 flex items-center justify-between relative cursor-pointer transition-colors`}
+              onClick={() => handleProductSelect(product.name)}
             >
-              Add +
-            </button>
-          </div>
+              {/* Image */}
+              <div className="flex-shrink-0 mr-4">
+                <div className="w-[70px] h-[75px] bg-[#F3F3F3] rounded-[15px] flex items-center justify-center">
+                  <Image src={product.image} alt={product.name} width={isMobile ? 60 : 80} height={isMobile ? 60 : 80} className="object-contain" />
+                </div>
+              </div>
 
-          {/* New flavor tag - positioned outside the card */}
-          <div className="absolute -top-2 right-4">
-            <div className="w-[112px] h-[19px] bg-[#E7E7F4] rounded-[4px] flex items-center justify-center">
-              <span className="text-[10px] font-bold leading-[150%] text-[#5D5CB6]">NEW FLAVOR</span>
+              {/* Text */}
+              <div className="flex-grow">
+                <h3 className={`font-semibold leading-[150%] text-[#606060] ${isMobile ? "text-sm" : "text-[19px]"}`}>
+                  {product.name}
+                </h3>
+                <p className={`italic text-[#606060] leading-[150%] ${isMobile ? "text-xs" : "text-[13px]"}`}>
+                  {product.description}
+                </p>
+              </div>
+
+              {/* Actions */}
+              <div className="flex-shrink-0 ml-4 flex items-center" onClick={(e) => e.stopPropagation()}>
+                {showCounter ? (
+                  <>
+                    <button
+                      className="w-[40px] h-[50px] bg-[#5D5CB6] text-white rounded-[8px] border-2 border-[#5D5CB6] flex items-center justify-center"
+                      onClick={() => decrementQuantity(product.name)}
+                    >
+                      <span className="text-[36px] font-medium leading-[150%]">-</span>
+                    </button>
+                    <div className="w-[40px] h-[36px] flex items-center justify-center">
+                      <span className="text-[20px] font-bold leading-[150%] text-black">
+                        {productQuantities[product.name] || 1}
+                      </span>
+                    </div>
+                    <button
+                      className="w-[40px] h-[50px] bg-[#5D5CB6] text-white rounded-[8px] border-2 border-[#5D5CB6] flex items-center justify-center"
+                      onClick={() => incrementQuantity(product.name)}
+                    >
+                      <span className="text-[36px] font-medium leading-[150%]">+</span>
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    className={`h-[50px] px-4 bg-[#5D5CB6] text-white font-bold ${isMobile ? "text-sm" : "text-[19px]"} rounded-[8px] flex items-center justify-center`}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                    }}
+                  >
+                    Add +
+                  </button>
+                )}
+              </div>
+
+              {/* Tag */}
+              {product.tag && (
+                <div className="absolute -top-2 right-4">
+                  <div
+                    className={`h-[19px] rounded-[4px] flex items-center justify-center px-2 ${
+                      product.tag === "NEW FLAVOR"
+                        ? "bg-[#E7E7F4]"
+                        : "bg-gradient-to-r from-[#7C7BF8]/30 via-[#E7E7F4] to-[#F2CEC8]/60"
+                    }`}
+                  >
+                    <span className="text-[10px] font-bold leading-[150%] text-[#5D5CB6]">{product.tag}</span>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        </div>
+          )
+        })}
 
-        {/* Hot Cocoa product card */}
-        <div
-          className={`w-full h-[116px] rounded-[8px] ${
-            selectedProduct === "Hot Cocoa" ? "border-2 border-[#5D5CB6]/80" : "border border-gray-200"
-          } bg-white p-4 flex items-center justify-between relative cursor-pointer transition-colors`}
-          onClick={() => handleProductSelect("Hot Cocoa")}
-        >
-          {/* Product image with background */}
-          <div className="flex-shrink-0 mr-4">
-            <div className="w-[86.04px] h-[91.93px] bg-[#F3F3F3] rounded-[15px] flex items-center justify-center">
-              <Image src="/hot.png" alt="Hot Cocoa" width={80} height={80} className="object-contain" />
-            </div>
-          </div>
-
-          {/* Product info */}
-          <div className="flex-grow">
-            <h3 className="text-[19px] font-semibold leading-[150%] text-[#606060]">Hot Cocoa</h3>
-            <p className="text-[13px] font-normal italic leading-[150%] text-[#606060]">
-              The perfect blend of chocolatey warmth and bedtime bliss—sip, savor, and sleep.
-            </p>
-          </div>
-
-          {/* Quantity counter */}
-          <div className="flex-shrink-0 ml-4 flex items-center" onClick={(e) => e.stopPropagation()}>
-            {/* Minus button */}
-            <button className="w-[40px] h-[50px] bg-[#5D5CB6] text-white rounded-[8px] border-2 border-[#5D5CB6] flex items-center justify-center">
-              <span className="text-[36px] font-medium leading-[150%]">-</span>
-            </button>
-
-            {/* Quantity display */}
-            <div className="w-[79.53px] h-[36px] flex items-center justify-center">
-              <span className="text-[24px] font-bold leading-[150%] text-black">1</span>
-            </div>
-
-            {/* Plus button */}
-            <button className="w-[40px] h-[50px] bg-[#5D5CB6] text-white rounded-[8px] border-2 border-[#5D5CB6] flex items-center justify-center">
-              <span className="text-[36px] font-medium leading-[150%]">+</span>
-            </button>
-          </div>
-
-          {/* Best seller tag - positioned outside the card with gradient */}
-          <div className="absolute -top-2 right-4">
-            <div className="w-[112px] h-[19px] bg-gradient-to-r from-[#7C7BF8]/30 via-[#E7E7F4] to-[#F2CEC8]/60 rounded-[4px] flex items-center justify-center">
-              <span className="text-[10px] font-bold leading-[150%] text-[#5D5CB6]">BEST SELLER</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Cinnamon Chai product card */}
-        <div
-          className={`w-full h-[116px] rounded-[8px] ${
-            selectedProduct === "Cinnamon Chai" ? "border-2 border-[#5D5CB6]/80" : "border border-gray-200"
-          } bg-white p-4 flex items-center justify-between relative cursor-pointer transition-colors`}
-          onClick={() => handleProductSelect("Cinnamon Chai")}
-        >
-          {/* Product image with background */}
-          <div className="flex-shrink-0 mr-4">
-            <div className="w-[86.04px] h-[91.93px] bg-[#F3F3F3] rounded-[15px] flex items-center justify-center">
-              <Image src="/chai.png" alt="Cinnamon Chai" width={80} height={80} className="object-contain" />
-            </div>
-          </div>
-
-          {/* Product info */}
-          <div className="flex-grow">
-            <h3 className="text-[19px] font-semibold leading-[150%] text-[#606060]">Cinnamon Chai</h3>
-            <p className="text-[13px] font-normal italic leading-[150%] text-[#606060]">
-              A delicious chai blend with hints of cinnamon and cardamom.
-            </p>
-          </div>
-
-          {/* Add button */}
-          <div className="flex-shrink-0 ml-4">
-            <button
-              className="w-[134px] h-[50px] bg-[#5D5CB6] text-white font-bold text-[19px] rounded-[8px] flex items-center justify-center"
-              onClick={(e) => {
-                e.stopPropagation() // Prevent triggering the card's onClick
-                // Add product logic here
-              }}
-            >
-              Add +
-            </button>
-          </div>
-        </div>
-
-        {/* Sleepy Berry product card */}
-        <div
-          className={`w-full h-[116px] rounded-[8px] ${
-            selectedProduct === "Sleepy Berry" ? "border-2 border-[#5D5CB6]/80" : "border border-gray-200"
-          } bg-white p-4 flex items-center justify-between relative cursor-pointer transition-colors`}
-          onClick={() => handleProductSelect("Sleepy Berry")}
-        >
-          {/* Product image with background */}
-          <div className="flex-shrink-0 mr-4">
-            <div className="w-[86.04px] h-[91.93px] bg-[#F3F3F3] rounded-[15px] flex items-center justify-center">
-              <Image src="/sleepy.png" alt="Sleepy Berry" width={80} height={80} className="object-contain" />
-            </div>
-          </div>
-
-          {/* Product info */}
-          <div className="flex-grow">
-            <h3 className="text-[19px] font-semibold leading-[150%] text-[#606060]">Sleepy Berry</h3>
-            <p className="text-[13px] font-normal italic leading-[150%] text-[#606060]">
-              A refreshingly bold berry flavor to quiet your mind and prepare you for dreamland.
-            </p>
-          </div>
-
-          {/* Quantity counter */}
-          <div className="flex-shrink-0 ml-4 flex items-center" onClick={(e) => e.stopPropagation()}>
-            {/* Minus button */}
-            <button className="w-[40px] h-[50px] bg-[#5D5CB6] text-white rounded-[8px] border-2 border-[#5D5CB6] flex items-center justify-center">
-              <span className="text-[36px] font-medium leading-[150%]">-</span>
-            </button>
-
-            {/* Quantity display */}
-            <div className="w-[79.53px] h-[36px] flex items-center justify-center">
-              <span className="text-[24px] font-bold leading-[150%] text-black">1</span>
-            </div>
-
-            {/* Plus button */}
-            <button className="w-[40px] h-[50px] bg-[#5D5CB6] text-white rounded-[8px] border-2 border-[#5D5CB6] flex items-center justify-center">
-              <span className="text-[36px] font-medium leading-[150%]">+</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Rose product card */}
-        <div
-          className={`w-full h-[116px] rounded-[8px] ${
-            selectedProduct === "Rose" ? "border-2 border-[#5D5CB6]/80" : "border border-gray-200"
-          } bg-white p-4 flex items-center justify-between relative cursor-pointer transition-colors`}
-          onClick={() => handleProductSelect("Rose")}
-        >
-          {/* Product image with background */}
-          <div className="flex-shrink-0 mr-4">
-            <div className="w-[86.04px] h-[91.93px] bg-[#F3F3F3] rounded-[15px] flex items-center justify-center">
-              <Image src="/rose.png" alt="Rose" width={74} height={74.56} className="object-contain" />
-            </div>
-          </div>
-
-          {/* Product info */}
-          <div className="flex-grow">
-            <h3 className="text-[19px] font-semibold leading-[150%] text-[#606060]">Rose</h3>
-            <p className="text-[13px] font-normal italic leading-[150%] text-[#606060]">
-              Soft floral notes of rose that make for a deliciously soothing tea before bed.
-            </p>
-          </div>
-
-          {/* Add button */}
-          <div className="flex-shrink-0 ml-4">
-            <button
-              className="w-[134px] h-[50px] bg-[#5D5CB6] text-white font-bold text-[19px] rounded-[8px] flex items-center justify-center"
-              onClick={(e) => {
-                e.stopPropagation() // Prevent triggering the card's onClick
-                // Add product logic here
-              }}
-            >
-              Add +
-            </button>
-          </div>
-        </div>
         <Subscribe />
       </div>
     </div>
@@ -238,7 +168,3 @@ const Flavors = () => {
 }
 
 export default Flavors
-
-
-
-

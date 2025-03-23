@@ -15,7 +15,6 @@ const ProductGallery = () => {
     checkIfMobile()
 
     window.addEventListener("resize", checkIfMobile)
-
     return () => window.removeEventListener("resize", checkIfMobile)
   }, [])
 
@@ -25,24 +24,20 @@ const ProductGallery = () => {
       alt: "Night Time Superfoods Mint Chocolate with Free Bottle",
     },
     {
-      src: "/placeholder.svg?height=70&width=72",
+      src: "/hot.png",
       alt: "Thumbnail 2",
     },
     {
-      src: "/placeholder.svg?height=70&width=72",
+      src: "/chai.png",
       alt: "Thumbnail 3",
     },
     {
-      src: "/placeholder.svg?height=70&width=72",
+      src: "/sleepy.png",
       alt: "Thumbnail 4",
     },
     {
-      src: "/placeholder.svg?height=70&width=72",
+      src: "/rose.png",
       alt: "Thumbnail 5",
-    },
-    {
-      src: "/placeholder.svg?height=70&width=72",
-      alt: "Thumbnail 6",
     },
   ]
 
@@ -63,7 +58,9 @@ const ProductGallery = () => {
         <div className="absolute top-4 right-4">
           <div className="relative">
             {isMobile && (
-              <div className="bg-blue-600 text-white text-xs font-bold py-1 px-2 rounded-full">FREE BOTTLE</div>
+              <div className="bg-blue-600 text-white text-xs font-bold py-1 px-2 rounded-full">
+                FREE BOTTLE
+              </div>
             )}
           </div>
         </div>
@@ -71,14 +68,23 @@ const ProductGallery = () => {
 
       {isMobile ? (
         <div className="flex justify-center gap-2 mt-2 mb-2 bg-gray-100 py-2">
-          {images.map((_, index) => (
+          {images.map((image, index) => (
             <button
               key={index}
               onClick={() => setSelectedImage(index)}
-              className={`w-[40px] h-[40px] rounded-[8px] border border-gray-300 bg-white ${
+              className={`w-[40px] h-[40px] rounded-[8px] border border-gray-300 bg-white overflow-hidden ${
                 selectedImage === index ? "ring-2 ring-blue-500" : ""
               }`}
-            />
+            >
+              <div className="relative w-full h-full">
+                <Image
+                  src={image.src || "/placeholder.svg"}
+                  alt={`Thumbnail ${index + 1}`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </button>
           ))}
         </div>
       ) : (
@@ -92,23 +98,19 @@ const ProductGallery = () => {
               }`}
             >
               <div className="relative w-full h-full bg-white">
-                {index === 0 && (
-                  <Image
-                    src={image.src || "/placeholder.svg"}
-                    alt={`Thumbnail ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                )}
+                <Image
+                  src={image.src || "/placeholder.svg"}
+                  alt={`Thumbnail ${index + 1}`}
+                  fill
+                  className="object-cover"
+                />
               </div>
             </button>
           ))}
         </div>
       )}
-
     </div>
   )
 }
 
 export default ProductGallery
-

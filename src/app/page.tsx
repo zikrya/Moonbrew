@@ -7,6 +7,7 @@ import ProductGallery from "@/components/ProductGallery"
 
 export default function Home() {
   const [isMobile, setIsMobile] = useState(false)
+
   useEffect(() => {
     const checkIfMobile = () => {
       setIsMobile(window.innerWidth < 768)
@@ -15,7 +16,6 @@ export default function Home() {
     checkIfMobile()
 
     window.addEventListener("resize", checkIfMobile)
-
     return () => window.removeEventListener("resize", checkIfMobile)
   }, [])
 
@@ -25,7 +25,7 @@ export default function Home() {
         <ProductGallery />
         <div className="flex flex-col gap-6">
           <ProductContent />
-          {!isMobile && <Flavors />}
+          <Flavors />
         </div>
       </div>
     </main>
