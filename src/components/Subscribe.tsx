@@ -16,6 +16,13 @@ const Subscribe = () => {
     return () => window.removeEventListener("resize", checkIfMobile)
   }, [])
 
+  const handleOptionSelect = (option: "subscribe" | "onetime") => {
+    setSelectedOption(option)
+  }
+
+  const originalPrice = ""
+  const discountedPrice = selectedOption === "subscribe" ? 38: 48
+
   return (
     <div className={`flex flex-col gap-4 ${isMobile ? "px-4" : ""}`}>
       {/* Subscribe & Save */}
@@ -26,7 +33,7 @@ const Subscribe = () => {
         onClick={() => handleOptionSelect("subscribe")}
       >
         {/* Most Popular Tag */}
-        <div className={`absolute -top-[12px] right-[20px] z-10`}>
+        <div className="absolute -top-[12px] right-[20px] z-10">
           <div className="w-[120px] h-[24px] bg-[#5D5CB6] rounded-[4.09px] flex items-center justify-center">
             <span className="text-white font-bold text-[15px] leading-[133%]">Most Popular</span>
           </div>
@@ -124,7 +131,14 @@ const Subscribe = () => {
             isMobile ? "w-full" : "w-[489px]"
           } h-[58px] bg-[#5D5CB6] rounded-[27.28px] text-white font-bold text-[19px] leading-[133%] flex items-center justify-center`}
         >
-          ADD TO CART - <span className="line-through mx-1">$96</span> $76
+          ADD TO CART{" "}
+          {selectedOption === "subscribe" ? (
+            <>
+              - <span className="line-through mx-1">{originalPrice}</span> ${discountedPrice}
+            </>
+          ) : (
+            <> - ${discountedPrice}</>
+          )}
         </button>
 
         <p className="text-[18px] font-normal leading-[150%] text-center tracking-[-0.02em] mt-4 px-4">
