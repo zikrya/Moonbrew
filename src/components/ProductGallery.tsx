@@ -75,7 +75,6 @@ const ProductGallery = () => {
         ))}
       </div>
 
-      {/* Selected image dimensions display */}
       <div className="text-xs text-blue-500 mt-2">{selectedImage === 0 && "667 × 518.78"}</div>
     </div>
   )

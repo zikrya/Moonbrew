@@ -1,10 +1,26 @@
+"use client"
+
+import { useState } from "react"
 import Image from "next/image"
 
 const Subscribe = () => {
+  // State to track which subscription option is selected
+  const [selectedOption, setSelectedOption] = useState<"subscribe" | "onetime">("subscribe")
+
+  // Function to handle option selection
+  const handleOptionSelect = (option: "subscribe" | "onetime") => {
+    setSelectedOption(option)
+  }
+
   return (
     <div className="flex flex-col gap-4">
       {/* Subscribe & Save box */}
-      <div className="relative w-[552px] h-[308px] bg-white rounded-[13.63px] border-[3px] border-[#5D5CB6] p-6">
+      <div
+        className={`relative w-[552px] h-[308px] bg-white rounded-[13.63px] ${
+          selectedOption === "subscribe" ? "border-[3px] border-[#5D5CB6]" : "border border-gray-200"
+        } p-6 cursor-pointer transition-colors`}
+        onClick={() => handleOptionSelect("subscribe")}
+      >
         {/* Most Popular tag */}
         <div className="absolute -top-2.5 right-8">
           <div className="bg-[#5D5CB6] text-white font-bold text-[15px] leading-[133%] w-[98px] h-[20px] rounded-md flex items-center justify-center">
@@ -14,7 +30,13 @@ const Subscribe = () => {
 
         {/* Header with pricing */}
         <div className="flex items-center">
-          <div className="w-[16.5px] h-[16.5px] rounded-full bg-[#5D5CB6] border-[0.68px] border-[#5D5CB6] mr-3"></div>
+          <div
+            className={`w-[16.5px] h-[16.5px] rounded-full ${
+              selectedOption === "subscribe"
+                ? "bg-[#5D5CB6] border-[0.68px] border-[#5D5CB6]"
+                : "border-2 border-gray-300 bg-white"
+            } mr-3 transition-colors`}
+          ></div>
           <h2 className="text-[19px] font-semibold leading-[150%] text-black">Subscribe & Save</h2>
         </div>
 
@@ -127,9 +149,20 @@ const Subscribe = () => {
       </div>
 
       {/* One Time Purchase box */}
-      <div className="w-[552px] h-[89px] bg-gray-100 rounded-[13.63px] p-6 flex items-center">
+      <div
+        className={`w-[552px] h-[89px] ${
+          selectedOption === "onetime" ? "bg-white border-[3px] border-[#5D5CB6]" : "bg-gray-100 border border-gray-200"
+        } rounded-[13.63px] p-6 flex items-center cursor-pointer transition-colors`}
+        onClick={() => handleOptionSelect("onetime")}
+      >
         {/* Radio button */}
-        <div className="w-5 h-5 rounded-full border-2 border-gray-300 flex-shrink-0 mr-3"></div>
+        <div
+          className={`w-5 h-5 rounded-full ${
+            selectedOption === "onetime"
+              ? "bg-[#5D5CB6] border-[0.68px] border-[#5D5CB6]"
+              : "border-2 border-gray-300 bg-white"
+          } flex-shrink-0 mr-3 transition-colors`}
+        ></div>
 
         {/* Text and pricing */}
         <div className="flex items-center w-full">
@@ -201,5 +234,4 @@ const Subscribe = () => {
 }
 
 export default Subscribe
-
 

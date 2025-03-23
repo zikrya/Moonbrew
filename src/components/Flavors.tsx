@@ -19,7 +19,7 @@ const Flavors = () => {
   }
 
   return (
-    <div className="relative mx-auto w-[590px] h-[1467px] bg-white rounded-[15px] border border-blue-300">
+    <div className="relative mx-auto w-[590px] h-[1467px] bg-white rounded-[15px]">
       {/* Header section */}
       <div className="pt-6 px-6">
         <h1 className="text-[19px] font-semibold leading-[150%]">Choose Your Flavors</h1>
