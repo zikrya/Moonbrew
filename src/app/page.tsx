@@ -32,7 +32,7 @@ const Page = () => {
       >
         <div className="container mx-auto px-6 flex items-center justify-between">
           <div className="flex items-center">
-            <div className="text-2xl font-bold text-[#5D5CB6]">SleepWell</div>
+            <div className="text-2xl font-bold text-[#5D5CB6]">Moonbrew</div>
           </div>
 
           <div className="hidden md:flex items-center space-x-10">
@@ -134,7 +134,7 @@ const Page = () => {
       <section id="benefits" className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Why Choose SleepWell?</h2>
+            <h2 className="text-3xl font-bold mb-4">Why Choose Moonbrew?</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Our natural sleep aid is designed to help you fall asleep faster, stay asleep longer, and wake up
               refreshed.
@@ -394,26 +394,26 @@ const Page = () => {
           <div className="max-w-3xl mx-auto">
             {[
               {
-                question: "How soon before bed should I drink SleepWell?",
+                question: "How soon before bed should I drink Moonbrew?",
                 answer:
-                  "We recommend drinking SleepWell 30 minutes before you plan to go to sleep for optimal results.",
+                  "We recommend drinking Moonbrew 30 minutes before you plan to go to sleep for optimal results.",
               },
               {
-                question: "Is SleepWell safe to use every night?",
+                question: "Is Moonbrew safe to use every night?",
                 answer:
-                  "Yes, SleepWell is formulated with natural ingredients and is safe for nightly use. It's non-habit forming and won't cause dependency.",
+                  "Yes, Moonbrew is formulated with natural ingredients and is safe for nightly use. It's non-habit forming and won't cause dependency.",
               },
               {
                 question: "How many servings are in each pack?",
                 answer: "Each pack contains 30 servings, which is a one-month supply when used nightly.",
               },
               {
-                question: "Can I take SleepWell with medications?",
+                question: "Can I take Moonbrew with medications?",
                 answer:
-                  "While SleepWell is made with natural ingredients, we recommend consulting with your healthcare provider before using if you're taking medications.",
+                  "While Moonbrew is made with natural ingredients, we recommend consulting with your healthcare provider before using if you're taking medications.",
               },
               {
-                question: "What if SleepWell doesn't work for me?",
+                question: "What if Moonbrew doesn't work for me?",
                 answer:
                   "We offer a 60-day money-back guarantee. If you're not satisfied with your results, simply contact us for a full refund.",
               },
@@ -435,7 +435,7 @@ const Page = () => {
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">Ready for Your Best Sleep Ever?</h2>
           <p className="text-white/90 max-w-xl mx-auto mb-6 text-sm md:text-base">
-            Join over 250,000 happy customers who have transformed their sleep with SleepWell.
+            Join over 250,000 happy customers who have transformed their sleep with Moonbrew.
           </p>
           <Link
             href="/shopping"
