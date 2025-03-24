@@ -46,7 +46,6 @@ const ProductGallery = () => {
     setSelectedImage(index)
   }
 
-  // Animation variants
   const mainImageVariants = {
     initial: (direction: number) => ({
       x: direction * 300,
@@ -98,7 +97,6 @@ const ProductGallery = () => {
       scale: 1.05,
     },
   }
-
 
   return (
     <div className="flex flex-col w-full items-center">
@@ -208,10 +206,9 @@ const ProductGallery = () => {
             `}
             variants={thumbnailVariants}
             initial="initial"
-            animate="animate"
+            animate={selectedImage === index ? ["animate", "selected"] : "animate"} // ✅ FIXED LINE
             whileHover="hover"
             custom={index}
-            animate={["animate", selectedImage === index ? "selected" : ""]}
           >
             <motion.div className="relative w-full h-full">
               <Image
