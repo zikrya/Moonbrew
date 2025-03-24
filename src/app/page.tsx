@@ -6,57 +6,38 @@ import Flavors from "@/components/Flavors"
 import ProductContent from "@/components/ProductContent"
 import ProductGallery from "@/components/ProductGallery"
 
-export default function Home() {
-  const [isMobile, setIsMobile] = useState(false)
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      delayChildren: 0.3,
+      staggerChildren: 0.2,
+    },
+  },
+}
 
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+  },
+}
 
-    checkIfMobile()
-
-    window.addEventListener("resize", checkIfMobile)
-    return () => window.removeEventListener("resize", checkIfMobile)
-  }, [])
-
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        when: "beforeChildren",
-        staggerChildren: 0.2,
-        duration: 0.5
-      }
-    }
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
-    }
-  }
-
+export default function Page() {
   return (
     <motion.main
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className={`min-h-screen ${isMobile ? "p-0" : "p-8 max-w-7xl mx-auto"}`}
+      className="min-h-screen w-full px-4 sm:px-6 md:px-8 max-w-[1440px] mx-auto"
     >
-      <div className={`flex flex-col md:flex-row ${isMobile ? "" : "gap-8 justify-center"}`}>
-        <motion.div variants={itemVariants}>
+      <div className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8 lg:gap-12">
+        <motion.div variants={itemVariants} className="w-full md:w-1/2 lg:w-3/5">
           <ProductGallery />
         </motion.div>
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4 sm:gap-6 w-full md:w-1/2 lg:w-2/5">
           <motion.div variants={itemVariants}>
             <ProductContent />
           </motion.div>

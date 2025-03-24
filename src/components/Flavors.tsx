@@ -1,26 +1,15 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import Image from "next/image"
 import Subscribe from "./Subscribe"
 
 const Flavors = () => {
-  const [isMobile, setIsMobile] = useState(false)
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null)
   const [productQuantities, setProductQuantities] = useState<{ [key: string]: number }>({
     "Hot Cocoa": 1,
     "Sleepy Berry": 1,
   })
-
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-
-    checkIfMobile()
-    window.addEventListener("resize", checkIfMobile)
-    return () => window.removeEventListener("resize", checkIfMobile)
-  }, [])
 
   const incrementQuantity = (productName: string) => {
     setProductQuantities((prev) => ({
@@ -45,15 +34,15 @@ const Flavors = () => {
   }
 
   return (
-    <div className={`relative bg-white rounded-[15px] ${isMobile ? "w-full px-4 py-4" : "mx-auto w-[590px] h-[1467px]"}`}>
+    <div className="relative bg-white rounded-[15px] w-full md:max-w-[590px] px-4 py-4 md:py-6 md:px-6 mx-auto">
       {/* Header */}
-      <div className={isMobile ? "pt-2" : "pt-6 px-6"}>
-        <h1 className={`font-semibold leading-[150%] ${isMobile ? "text-base" : "text-[19px]"}`}>Choose Your Flavors</h1>
-        <p className={`text-[#606060] ${isMobile ? "text-sm" : "text-[15px]"} leading-[150%]`}>30 servings per pack</p>
+      <div className="pt-2 md:pt-6 md:px-0">
+        <h1 className="font-semibold leading-[150%] text-base sm:text-lg md:text-[19px]">Choose Your Flavors</h1>
+        <p className="text-[#606060] text-sm md:text-[15px] leading-[150%]">30 servings per pack</p>
       </div>
 
       {/* Product cards */}
-      <div className={`mt-6 flex flex-col gap-4 ${isMobile ? "" : "px-4"}`}>
+      <div className="mt-6 flex flex-col gap-4">
         {[
           {
             name: "Mint Chocolate",
@@ -89,51 +78,57 @@ const Flavors = () => {
           return (
             <div
               key={product.name}
-              className={`w-full rounded-[8px] ${isSelected ? "border-2 border-[#5D5CB6]/80" : "border border-gray-200"} bg-white p-4 flex items-center justify-between relative cursor-pointer transition-colors`}
+              className={`w-full rounded-[8px] ${isSelected ? "border-2 border-[#5D5CB6]/80" : "border border-gray-200"} bg-white p-3 sm:p-4 flex items-center justify-between relative cursor-pointer transition-colors`}
               onClick={() => handleProductSelect(product.name)}
             >
               {/* Image */}
-              <div className="flex-shrink-0 mr-4">
-                <div className="w-[70px] h-[75px] bg-[#F3F3F3] rounded-[15px] flex items-center justify-center">
-                  <Image src={product.image} alt={product.name} width={isMobile ? 60 : 80} height={isMobile ? 60 : 80} className="object-contain" />
+              <div className="flex-shrink-0 mr-3 sm:mr-4">
+                <div className="w-[60px] h-[65px] sm:w-[70px] sm:h-[75px] bg-[#F3F3F3] rounded-[15px] flex items-center justify-center">
+                  <Image
+                    src={product.image || "/placeholder.svg"}
+                    alt={product.name}
+                    width={60}
+                    height={60}
+                    className="object-contain w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] md:w-[80px] md:h-[80px]"
+                  />
                 </div>
               </div>
 
               {/* Text */}
-              <div className="flex-grow">
-                <h3 className={`font-semibold leading-[150%] text-[#606060] ${isMobile ? "text-sm" : "text-[19px]"}`}>
+              <div className="flex-grow min-w-0">
+                <h3 className="font-semibold leading-[150%] text-[#606060] text-sm sm:text-base md:text-[19px] truncate">
                   {product.name}
                 </h3>
-                <p className={`italic text-[#606060] leading-[150%] ${isMobile ? "text-xs" : "text-[13px]"}`}>
+                <p className="italic text-[#606060] leading-[150%] text-xs sm:text-xs md:text-[13px] line-clamp-2 sm:line-clamp-none">
                   {product.description}
                 </p>
               </div>
 
               {/* Actions */}
-              <div className="flex-shrink-0 ml-4 flex items-center" onClick={(e) => e.stopPropagation()}>
+              <div className="flex-shrink-0 ml-2 sm:ml-4 flex items-center" onClick={(e) => e.stopPropagation()}>
                 {showCounter ? (
-                  <>
+                  <div className="flex items-center">
                     <button
-                      className="w-[40px] h-[50px] bg-[#5D5CB6] text-white rounded-[8px] border-2 border-[#5D5CB6] flex items-center justify-center"
+                      className="w-[30px] h-[40px] sm:w-[40px] sm:h-[50px] bg-[#5D5CB6] text-white rounded-[8px] border-2 border-[#5D5CB6] flex items-center justify-center"
                       onClick={() => decrementQuantity(product.name)}
                     >
-                      <span className="text-[36px] font-medium leading-[150%]">-</span>
+                      <span className="text-[24px] sm:text-[36px] font-medium leading-[150%]">-</span>
                     </button>
-                    <div className="w-[40px] h-[36px] flex items-center justify-center">
-                      <span className="text-[20px] font-bold leading-[150%] text-black">
+                    <div className="w-[30px] h-[36px] sm:w-[40px] flex items-center justify-center">
+                      <span className="text-[16px] sm:text-[20px] font-bold leading-[150%] text-black">
                         {productQuantities[product.name] || 1}
                       </span>
                     </div>
                     <button
-                      className="w-[40px] h-[50px] bg-[#5D5CB6] text-white rounded-[8px] border-2 border-[#5D5CB6] flex items-center justify-center"
+                      className="w-[30px] h-[40px] sm:w-[40px] sm:h-[50px] bg-[#5D5CB6] text-white rounded-[8px] border-2 border-[#5D5CB6] flex items-center justify-center"
                       onClick={() => incrementQuantity(product.name)}
                     >
-                      <span className="text-[36px] font-medium leading-[150%]">+</span>
+                      <span className="text-[24px] sm:text-[36px] font-medium leading-[150%]">+</span>
                     </button>
-                  </>
+                  </div>
                 ) : (
                   <button
-                    className={`w-[134px] h-[50px] bg-[#5D5CB6] rounded-[8px] text-white font-bold text-[19px] leading-[150%] flex items-center justify-center ${isMobile ? "text-sm" : "text-[19px]"} rounded-[8px] flex items-center justify-center`}
+                    className="h-[40px] sm:h-[50px] px-4 sm:w-[134px] bg-[#5D5CB6] rounded-[8px] text-white font-bold text-sm sm:text-base md:text-[19px] leading-[150%] flex items-center justify-center"
                     onClick={(e) => {
                       e.stopPropagation()
                     }}
@@ -168,3 +163,4 @@ const Flavors = () => {
 }
 
 export default Flavors
+
