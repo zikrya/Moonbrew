@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
 
 const Subscribe = () => {
   const [selectedOption, setSelectedOption] = useState<"subscribe" | "onetime">("subscribe")
@@ -125,7 +124,7 @@ const Subscribe = () => {
 
       {/* Add to Cart */}
       <div className="mt-4 flex flex-col items-center w-full">
-        <button className="w-full sm:max-w-[489px] h-[50px] sm:h-[58px] bg-[#5D5CB6] rounded-[27.28px] text-white font-bold text-base sm:text-lg md:text-[19px] leading-[133%] flex items-center justify-center">
+        <button className="w-full sm:max-w-[489px] h-[50px] sm:h-[58px] bg-[#5D5CB6] rounded-[27.28px] text-white font-bold text-base sm:text-lg md:text-[19px] leading-[133%] flex items-center justify-center transition-all duration-200 hover:bg-[#5D5CB6]/90 active:bg-[#5D5CB6]/70 active:scale-95 active:shadow-inner">
           ADD TO CART{" "}
           {selectedOption === "subscribe" ? (
             <>
@@ -145,12 +144,137 @@ const Subscribe = () => {
         <div className="mt-4 w-full sm:max-w-[446px]">
           <div className="h-auto py-4 sm:h-[87px] bg-[#F6F6F6] rounded-lg flex flex-col sm:flex-row justify-between items-center px-4 sm:px-8 gap-4 sm:gap-0">
             {[
-              { label: "Free Shipping\nOrders $60+", icon: "/placeholder.svg" },
-              { label: "60-day\nMoney Back Guarantee", icon: "/placeholder.svg" },
-              { label: "250,000+\nHappy Customers", icon: "/placeholder.svg" },
+              {
+                label: "Free Shipping\nOrders $60+",
+                icon: (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M16 3H1V16H16V3Z"
+                      stroke="#6E6D6D"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M16 8H20L23 11V16H16V8Z"
+                      stroke="#6E6D6D"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M5.5 21C6.88071 21 8 19.8807 8 18.5C8 17.1193 6.88071 16 5.5 16C4.11929 16 3 17.1193 3 18.5C3 19.8807 4.11929 21 5.5 21Z"
+                      stroke="#6E6D6D"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M18.5 21C19.8807 21 21 19.8807 21 18.5C21 17.1193 19.8807 16 18.5 16C17.1193 16 16 17.1193 16 18.5C16 19.8807 17.1193 21 18.5 21Z"
+                      stroke="#6E6D6D"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                ),
+              },
+              {
+                label: "60-day\nMoney Back Guarantee",
+                icon: (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z"
+                      stroke="#6E6D6D"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path d="M16 2V6" stroke="#6E6D6D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M8 2V6" stroke="#6E6D6D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path
+                      d="M3 10H21"
+                      stroke="#6E6D6D"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M8 14H8.01"
+                      stroke="#6E6D6D"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M12 14H12.01"
+                      stroke="#6E6D6D"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M16 14H16.01"
+                      stroke="#6E6D6D"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M8 18H8.01"
+                      stroke="#6E6D6D"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M12 18H12.01"
+                      stroke="#6E6D6D"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M16 18H16.01"
+                      stroke="#6E6D6D"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                ),
+              },
+              {
+                label: "250,000+\nHappy Customers",
+                icon: (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M17 8C17 10.7614 14.7614 13 12 13C9.23858 13 7 10.7614 7 8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8Z"
+                      stroke="#6E6D6D"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M3 21V19C3 15.134 6.13401 12 10 12H14C17.866 12 21 15.134 21 19V21"
+                      stroke="#6E6D6D"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M8 21H16"
+                      stroke="#6E6D6D"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                ),
+              },
             ].map((item, i) => (
               <div key={i} className="flex flex-col items-center text-center text-[#6E6D6D] text-xs sm:text-[14px]">
-                <Image src={item.icon || "/placeholder.svg"} alt="Icon" width={24} height={24} />
+                {item.icon}
                 <p className="mt-1 leading-[120%] whitespace-pre-line tracking-[-0.02em]">{item.label}</p>
               </div>
             ))}
@@ -162,3 +286,4 @@ const Subscribe = () => {
 }
 
 export default Subscribe
+
