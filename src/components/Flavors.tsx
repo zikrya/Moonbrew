@@ -7,8 +7,8 @@ import Subscribe from "./Subscribe"
 const Flavors = () => {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null)
   const [productQuantities, setProductQuantities] = useState<{ [key: string]: number }>({
-    "Hot Cocoa": 1,
-    "Sleepy Berry": 1,
+    "Hot Cocoa": 0,
+    "Sleepy Berry": 0,
   })
 
   const incrementQuantity = (productName: string) => {
@@ -109,18 +109,18 @@ const Flavors = () => {
                 {showCounter ? (
                   <div className="flex items-center">
                     <button
-                      className="w-[30px] h-[40px] sm:w-[40px] sm:h-[50px] bg-[#5D5CB6] text-white rounded-[8px] border-2 border-[#5D5CB6] flex items-center justify-center"
+                      className="w-[30px] h-[40px] sm:w-[40px] sm:h-[50px] bg-[#5D5CB6] text-white rounded-[8px] border-2 border-[#5D5CB6] flex items-center justify-center transition-all duration-200 hover:bg-[#5D5CB6]/90 active:bg-[#5D5CB6]/70 active:scale-95"
                       onClick={() => decrementQuantity(product.name)}
                     >
                       <span className="text-[24px] sm:text-[36px] font-medium leading-[150%]">-</span>
                     </button>
                     <div className="w-[30px] h-[36px] sm:w-[40px] flex items-center justify-center">
                       <span className="text-[16px] sm:text-[20px] font-bold leading-[150%] text-black">
-                        {productQuantities[product.name] || 1}
+                        {productQuantities[product.name] || 0}
                       </span>
                     </div>
                     <button
-                      className="w-[30px] h-[40px] sm:w-[40px] sm:h-[50px] bg-[#5D5CB6] text-white rounded-[8px] border-2 border-[#5D5CB6] flex items-center justify-center"
+                      className="w-[30px] h-[40px] sm:w-[40px] sm:h-[50px] bg-[#5D5CB6] text-white rounded-[8px] border-2 border-[#5D5CB6] flex items-center justify-center transition-all duration-200 hover:bg-[#5D5CB6]/90 active:bg-[#5D5CB6]/70 active:scale-95"
                       onClick={() => incrementQuantity(product.name)}
                     >
                       <span className="text-[24px] sm:text-[36px] font-medium leading-[150%]">+</span>
@@ -128,7 +128,7 @@ const Flavors = () => {
                   </div>
                 ) : (
                   <button
-                    className="h-[40px] sm:h-[50px] px-4 sm:w-[134px] bg-[#5D5CB6] rounded-[8px] text-white font-bold text-sm sm:text-base md:text-[19px] leading-[150%] flex items-center justify-center"
+                    className="h-[40px] sm:h-[50px] px-4 sm:w-[134px] bg-[#5D5CB6] rounded-[8px] text-white font-bold text-sm sm:text-base md:text-[19px] leading-[150%] flex items-center justify-center transition-all duration-200 hover:bg-[#5D5CB6]/90 active:bg-[#5D5CB6]/70 active:scale-95 active:shadow-inner"
                     onClick={(e) => {
                       e.stopPropagation()
                     }}
