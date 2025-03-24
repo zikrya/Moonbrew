@@ -99,19 +99,6 @@ const ProductGallery = () => {
     },
   }
 
-  const badgeVariants = {
-    initial: { scale: 0, opacity: 0 },
-    animate: {
-      scale: 1,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 500,
-        damping: 15,
-        delay: 0.5,
-      },
-    },
-  }
 
   return (
     <div className="flex flex-col w-full items-center">
