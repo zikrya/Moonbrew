@@ -39,12 +39,6 @@ const Page = () => {
             <a href="#benefits" className="text-gray-700 hover:text-[#5D5CB6] transition-colors text-sm font-medium">
               Benefits
             </a>
-            <a
-              href="#testimonials"
-              className="text-gray-700 hover:text-[#5D5CB6] transition-colors text-sm font-medium"
-            >
-              Testimonials
-            </a>
             <a href="#flavors" className="text-gray-700 hover:text-[#5D5CB6] transition-colors text-sm font-medium">
               Flavors
             </a>
